@@ -37,14 +37,13 @@ pipeline{
         stage("Create Docker file"){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'nexus-pswd', variable: 'nexus-pswd')]) {
+                   withCredentials([string(credentialsId: 'nexus-pswd', variable: 'nexus-pswd')]) {
                     sh '''
-                    sudo docker build -t 184.73.41.229:8083/springapp:${BUILD_ID} .
-                    echo ${nexus-pswd}
-                    sudo docker login -u admin -p $nexus-pswd 184.73.41.229:8083
-                    sudo docker push 184.73.41.229:8083/springapp:${BUILD_ID}
+                     sudo docker build -t 184.73.41.229:8083/springapp:${BUILD_ID} .
+                     sudo docker login -u admin -p $nexus-pswd 184.73.41.229:8083
+                     sudo docker push 184.73.41.229:8083/springapp:${BUILD_ID}
                     '''
-                    }
+                   }
                 }
             }
         }
