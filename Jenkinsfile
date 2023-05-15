@@ -40,7 +40,7 @@ pipeline{
                    withCredentials([string(credentialsId: 'nexus-pswd', variable: 'nexus-pswd')]) {
                     sh '''
                      sudo docker build -t 34.207.106.193:8083/springapp:${BUILD_ID} .
-                     sudo docker login -u admin -p $nexus-pswd 34.207.106.193:8083
+                     sudo docker login -u admin -p ${nexus-pswd} 34.207.106.193:8083
                      sudo docker push 34.207.106.193:8083/springapp:${BUILD_ID}
                     '''
                    }
