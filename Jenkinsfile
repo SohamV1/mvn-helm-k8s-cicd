@@ -58,6 +58,17 @@ pipeline{
                 }
             }
         }
+        stage("Upload to helm repo"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus', variable: 'nexus')]) {
+                     dir('kubernetes/myapp/') {
+                      sh 'helm package . ' 
+                      sh ' curl -u admin:$nexus http://174.129.179.59:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v '
+                 }
+                }
+            }
+        }
     }
     post {
 		always {
