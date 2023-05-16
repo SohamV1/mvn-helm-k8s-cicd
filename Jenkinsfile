@@ -51,7 +51,8 @@ pipeline{
             steps{
                 script{
                     dir('kubernetes/myapp/') {
-
+                        sh 'pwd'
+                        sh 'ls'
                         sh ' helm datree test . '
                     }
                 }
