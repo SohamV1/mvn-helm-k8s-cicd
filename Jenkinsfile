@@ -63,8 +63,12 @@ pipeline{
                 script{
                    withCredentials([string(credentialsId: 'nexus', variable: 'nexus')]) {
                     dir('kubernetes/myapp/') {
-                      sh 'helm package . ' 
-                      sh ' curl -u admin:$nexus http://174.129.179.59:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v '
+                      sh '''
+                      helm package .
+                      helmversion = $(helm show chart . | grep version | cut -d" " -f 2)
+                      curl -u admin:$nexus http://174.129.179.59:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v 
+                      rm -rf myapp-${helmversion}.tgz
+                      '''
                     }
                     }
                 }
