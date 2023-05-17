@@ -65,7 +65,7 @@ pipeline{
                     dir('kubernetes/myapp/') {
                       sh '''
                       helm package .
-                      helmversion = $(helm show chart . | grep version | cut -d" " -f 2)
+                      helmversion=$(helm show chart . | grep version | cut -d" " -f 2)
                       curl -u admin:$nexus http://18.204.195.185:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v 
                       rm -rf myapp-${helmversion}.tgz
                       '''
