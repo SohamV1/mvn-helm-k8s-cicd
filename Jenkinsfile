@@ -39,9 +39,9 @@ pipeline{
                 script{
                    withCredentials([string(credentialsId: 'nexus', variable: 'nexus')]) {
                     sh '''
-                     sudo docker build -t 174.129.179.59:8083/springapp:${BUILD_ID} .
-                     sudo docker login -u admin -p ${nexus} 174.129.179.59:8083
-                     sudo docker push 174.129.179.59:8083/springapp:${BUILD_ID}
+                     sudo docker build -t 18.204.195.185:8083/springapp:${BUILD_ID} .
+                     sudo docker login -u admin -p ${nexus} 18.204.195.185:8083
+                     sudo docker push 18.204.195.185:8083/springapp:${BUILD_ID}
                     '''
                    }
                 }
@@ -66,7 +66,7 @@ pipeline{
                       sh '''
                       helm package .
                       helmversion = $(helm show chart . | grep version | cut -d" " -f 2)
-                      curl -u admin:$nexus http://174.129.179.59:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v 
+                      curl -u admin:$nexus http://18.204.195.185:8081/repository/helm-repo/ --upload-file myapp-${helmversion}.tgz  -v 
                       rm -rf myapp-${helmversion}.tgz
                       '''
                     }
